@@ -1,0 +1,314 @@
+.template_page_mwb_cat_order div.notice , .template_page_mwb_cat_group div.notice , .template_page_mwb_tgp  div.notice {
+	display: none;
+}
+
+.template_page_mwb_cat_group , .template_page_mwb_cat_order , .template_page_mwb_tgp {
+	background: #fff;
+}
+
+.template_page_mwb_cat_order #wpcontent , .template_page_mwb_cat_group #wpcontent , .template_page_mwb_tgp #wpcontent{
+	padding-left: 0px;
+}
+.mwb-tgp-setting-head {
+	background: #1ab7a1;
+	border: 1px solid #1ab7a1;
+	color: #fff;
+	font-size: 22px;
+	font-weight: 600;
+	margin-bottom: 15px;
+	padding: 22px 10px;
+}
+
+.mwb-tgp-admin-form-section {
+	padding: 15px;
+	margin: 20px;
+	background: #fff;
+	border: 1px #ececec;
+	border-radius: 5px;
+	width: 100%;
+	max-width: 94%;
+	box-shadow: 0 4px 12px 0 rgba(0,0,0,.15);
+}
+
+.mwb-tgp-admin-form-section-head {
+	font-size: 18px;
+	font-weight: 400;
+	padding: 10px;
+	margin-bottom: 10px;
+
+}
+
+.mwb-tgp-admin-form-row{
+	padding: 10px;
+}
+
+.mwb-tgp-admin-form-row label {
+	display: inline-block;
+	min-width: 260px;
+	font-size: 14px;
+}
+
+.mwb-cat-order-list-item {
+	background: #fff;
+	font-size: 20px;
+	color: #000;
+	cursor: pointer;
+	text-align: center;
+}
+
+.mwb-tgp-cat-order-list-group-wrap{
+	margin: 10px;
+	padding: 20px;
+	background: #fff;
+	box-shadow: 0 4px 12px 0 rgba(0,0,0,.15);
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.mwb-cat-order-list {
+	padding: 0px 50px;
+}
+
+.mwb-cat-order-list-group-cats{
+	padding: 10px;
+}
+
+.mwb-cat-order-list-group-name {
+	font-size: 22px;
+	text-align: center;
+	background: #8e8e8e;
+	border: 2px solid #8e8e8e;
+	padding: 16px;
+	color: #fff;
+	border-radius: 3px;
+}
+.mwb-list-cat-name {
+	padding: 10px;
+	margin: 10px 0px ;
+	border: 2px solid #1ab7a1;
+	border-radius: 3px;
+	background: #1ab7a1;
+	color: #fff;
+}
+
+
+.mwb-list-tree {
+	padding: 0px 30px;
+}
+
+.category-setting {
+	float: right;
+}
+
+.mwb-hide{
+	display: none;
+}
+
+.mwb-template-card-list {
+	padding: 0px 20px;
+}
+
+.mwb-template-card-name{
+	padding: 10px;
+	margin-bottom: 5px;
+	border: 2px solid #4f4f4f;
+	border-radius: 3px;
+	background: #4f4f4f;
+	color: #fff;
+}
+
+.mwb-list-cat-name.parent {
+	background: #0a4980;;
+	border: 2px solid #0a4980;;
+}
+
+.mwb-tgp-cat-group-item {
+	min-width: 400px;
+	padding: 15px 10px;
+	border: 2px solid #1ab7a1;
+	max-width: 400px;
+	cursor: pointer;
+	border-radius: 4px;
+	background: #fff;
+}
+
+.mwb-tgp-cat-group-name {
+	font-size: 16px;
+	font-weight: 400;
+}
+
+.mwb-list-item-action{
+	float: right;
+}
+
+#mwb-editor-notice {
+	padding: 5px 5px;
+	background: #6615db;
+	border: 1px solid #7e8993;
+	border-radius: 4px;
+	color: #fff;
+	font-weight: 400;
+	font-size: 14px;
+	margin-top: 10px;
+}
+
+.nav-tab.selected {
+	background: #fff;
+}
+
+.mwb-tgp-notice {
+	padding: 10px;
+	border: 1px solid #16ac34;
+	background: #16ac34;
+	border-radius: 4px;
+	color: #fff;
+	font-weight: 400;
+}
+
+.mwb-tgp-notice-close {
+	float: right;
+}
+
+.mwb-list-item-delete {
+	color: #fb0707;
+}
+
+.mwb-list-item-edit {
+	color: #22a607;
+}
+
+.mwb-tgp-cat-order-body-section{
+	float: left;
+}
+
+.mwb-tgp-cat-order-body-left{
+	width: 60%
+}
+
+.mwb-tgp-cat-order-body-right{
+	width: 40%
+}
+.mwb-tgp-cat-new-group-from{
+	padding: 30px 10px;
+	border: 1px solid #16ac34;
+	border-radius: 4px;
+	margin: 10px 0px;
+}
+
+.mwb-name-input {
+	width: 60%;
+	height: 40px;
+}
+
+.category-setting a {
+	color: #fff;
+	text-decoration: none;
+}
+
+
+/*===============================
+=            New CSS            =
+===============================*/
+#update-nag, .update-nag {
+	display: none;
+}
+
+.mwb-tgp-admin-content form .button-primary {
+	margin-left: 25px;
+	margin-top: 20px;
+	padding: 5px 15px;
+}
+
+.mwb-tgp-admin-wrap .nav-tab-wrapper .nav-tab {
+    background: #ffffff;
+    border-radius: 4px 4px 0px 0px;
+    padding: 8px 20px;
+    transition: 0.3s linear all;
+}
+
+.mwb-tgp-admin-wrap .nav-tab-wrapper .selected {
+	background-color: #1AB7A1;
+	color: #ffffff;
+}
+
+.mwb-tgp-admin-wrap .nav-tab-wrapper .nav-tab:hover,
+.mwb-tgp-admin-wrap .nav-tab-wrapper .nav-tab:focus {
+    background: #1AB7A1 !important;
+    outline: none !important;
+    transition: 0.3s linear all;
+}
+
+.mwb-tgp-cat-group-save-btn-wrap .button {
+    background-color: #0071A1;
+    color: #ffffff;
+    padding: 5px 20px;
+    transition: 0.3s linear all;
+}
+
+.mwb-tgp-cat-group-save-btn-wrap .button:hover,
+.mwb-tgp-cat-group-save-btn-wrap .button:focus {
+	background-color: #0071A1;
+	color: #ffffff;
+	opacity: 0.8;
+}
+
+.mwb-tgp-cat-new-group-from.mwb-hide .button {
+    background-color: #0071A1;
+    color: #ffffff;
+    padding: 5px 10px;
+    transition: 0.3s linear all;
+}
+
+.mwb-tgp-cat-new-group-from.mwb-hide .button:hover,
+.mwb-tgp-cat-new-group-from.mwb-hide .button:focus {
+	background-color: #0071A1;
+	color: #ffffff;
+	opacity: 0.8;
+}
+
+.mwb-tgp-cat-group-save-btn-wrap .button {
+    margin-left: 12px;
+}
+/*=====  End of New CSS  ======*/
+/*===================================
+=            MEDIA QUERY            =
+===================================*/
+@media only screen and (max-width: 768px) {
+
+	.mwb-tgp-cat-order-body-left {
+		padding-bottom: 40px;
+		width: 100%;
+	}
+
+	.mwb-tgp-cat-order-body-right {
+		width: 100%;
+	}
+	.mwb-tgp-cat-group-item {
+		min-width: 0;
+		margin-left: 0;
+		margin-bottom: 15px;
+		margin-right: 20px;
+	}
+
+	.mwb-tgp-admin-form-section {
+		margin: 20px auto;
+		max-width: 88%;
+		width: 100%;
+	}
+
+	.mwb-tgp-cat-new-group-from.mwb-hide .button {
+		padding: 0 10px;
+	}
+
+	.mwb-tgp-cat-group-save-btn-wrap .button {
+		padding: 0 20px;
+
+	}
+
+}
+
+
+
+
+/*=====  End of MEDIA QUERY  ======*/
+
