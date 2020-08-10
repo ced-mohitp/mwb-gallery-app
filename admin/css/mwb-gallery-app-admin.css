@@ -20,7 +20,7 @@
 }
 
 .mwb-tgp-admin-form-section {
-	padding: 15px;
+	
 	margin: 20px;
 	background: #fff;
 	border: 1px #ececec;
@@ -30,11 +30,17 @@
 	box-shadow: 0 4px 12px 0 rgba(0,0,0,.15);
 }
 
+.mwb-tgp-admin-form-section-content{
+	padding: 15px;
+}
+
 .mwb-tgp-admin-form-section-head {
 	font-size: 18px;
-	font-weight: 400;
-	padding: 10px;
+	font-weight: 600;
+	padding: 15px;
 	margin-bottom: 10px;
+	background: #1ab7a1;
+	color: #fff;
 
 }
 
@@ -269,6 +275,12 @@
 .mwb-tgp-cat-group-save-btn-wrap .button {
     margin-left: 12px;
 }
+
+.mwb-tgp-admin-form-row label {
+	font-size: 16px;
+	font-weight: 600;
+}
+
 /*=====  End of New CSS  ======*/
 /*===================================
 =            MEDIA QUERY            =

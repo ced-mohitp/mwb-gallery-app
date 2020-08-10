@@ -73,7 +73,7 @@ class Mwb_Gallery_App_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/mwb-gallery-app-admin.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/mwb-gallery-app-admin.css', array(), time(), 'all' );
 
 	}
 
@@ -1069,7 +1069,11 @@ class Mwb_Gallery_App_Admin {
 
  		$gbl_setting = get_option('mwb_tgp_gbl_setting' , Mwb_Gallery_App::get_settings("mwb_tgp_gbl_setting"));
 
- 		$all_settings = array_merge($sidebar_setting , $template_setting, $card_setting ,$card_info_setting, $prev_page_setting, $mbl_setting , $gbl_setting) ; 
+ 		$header_setting = get_option('mwb_tgp_header_setting' , Mwb_Gallery_App::get_settings("mwb_tgp_header_setting"));
+
+ 		$footer_setting = get_option('mwb_tgp_footer_setting' , Mwb_Gallery_App::get_settings("mwb_tgp_footer_setting"));
+
+ 		$all_settings = array_merge($sidebar_setting , $template_setting, $card_setting ,$card_info_setting, $prev_page_setting, $mbl_setting , $gbl_setting , $header_setting, $footer_setting) ; 
 
  		foreach ($all_settings as $key => $setting) {
  			if(strrpos($key, 'size') !== false){
@@ -1268,7 +1272,9 @@ class Mwb_Gallery_App_Admin {
  			'mwb_tgp_card_info_setting',
  			'mwb_tgp_prev_setting',
  			'mwb_tgp_mbl_setting',
- 			'mwb_tgp_gbl_setting'
+ 			'mwb_tgp_gbl_setting',
+ 			'mwb_tgp_header_setting',
+ 			'mwb_tgp_footer_setting'
  		);
 
  		foreach ($setting_options as $k => $setting_key) {
@@ -1298,6 +1304,8 @@ class Mwb_Gallery_App_Admin {
  			'card-info' => 'Template Info',
  			'prev-page' => 'Preview Panel',
  			'mobile' => 'Mobile View',
+ 			'header' => 'App Header',
+ 			'footer' => 'App Footer',
  			'global' => 'Global',
  		);
  		$tabs_html = '' ; 
