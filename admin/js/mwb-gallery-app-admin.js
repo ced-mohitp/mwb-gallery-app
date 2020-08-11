@@ -18,13 +18,7 @@ jQuery(document).ready(function($){
 		list.slideToggle();
 	});
 
-/*	$('.mwb-list-cat-name').click(function(e){
-		const list  = jQuery(this).closest('.mwb-template-cat').find('.mwb-template-card-list');
-		if(list.length > 0 ){
-			list.slideToggle();
-		}
-	});
-*/
+
 
 
 	updateCategoryOrder = (event , ui) => {
@@ -86,6 +80,7 @@ jQuery(document).ready(function($){
 		var groupData = {};
 		var catTermOrder = {};
 		var groupOrder = {};
+		var cardOrder = {};
 
 		jQuery('.mwb-template-cat').each(function (index, obj) {
 			var catID  = jQuery(this).attr("data-category-id") ;
@@ -105,6 +100,15 @@ jQuery(document).ready(function($){
 			groupOrder[id] = order;
 		});
 
+		jQuery('.mwb-template-card-listitem').each(function(index , obj){
+			var card_id = jQuery(this).attr('card_id');
+			var card_order = jQuery(this).attr('card_order');
+			var root_cat_id = jQuery(this).attr('root_cat_id');
+			cardOrder[root_cat_id] = {'card_id' : card_id , 'card_order' : card_order };
+		});
+
+		//console.log(cardOrder);
+
 		var data = {
 			'action' : 'mwb_set_category_order' , 
 			'group_data' : groupData,
@@ -117,7 +121,6 @@ jQuery(document).ready(function($){
 				alert('updated');
 			}
 		});
-
 	});
 
 
@@ -221,6 +224,27 @@ jQuery(document).ready(function($){
 	});
 
 	//cat order js 
+
+
+	//card order js
+
+	$('.mwb-template-card-list').sortable({
+		update: function( event, ui ) {
+			//updateGroupListOrder(event , ui);
+		}
+	});
+
+
+	jQuery(".mwb-cat-order-list-item").each(function(index ,val){
+		var i = 0 ; 
+		var parent_cat_id = jQuery(this).attr('data-category-id');
+		jQuery(this).find('.mwb-template-card-listitem').each(function(index , val){
+			jQuery(this).attr('card_order' , ++i);
+			jQuery(this).attr('root_cat_id' , parent_cat_id);
+		});
+	});
+
+	//card order js 
 
 	//btn prev select 
 

@@ -305,15 +305,29 @@ class WP_REST_Template_Controller extends WP_REST_Controller {
 		}
 
 		$posts_query  = new WP_Query();
-
-		$featured_query_result = $this->get_featured_cards_data($query_args);
+		$fixed_cards_ids = array();
+		$featured_query_result = array();
+		$top_query_result = array();
 		$featured_card_ids = array();
 
-		foreach ($featured_query_result as $featured_post) {
-			$featured_card_ids[] = $featured_post->ID ; 
+
+		$featured_query_result = $this->get_featured_cards_data($query_args);
+		
+		foreach ($featured_query_result as $featured_cards) {
+			$featured_card_ids[] = $featured_cards->ID ; 
 		}
 
-		$query_args['post__not_in'] = $featured_card_ids;
+		if(isset($query_args['paged']) && $query_args['paged'] == 1 ){
+			$top_query_result = $this->get_top_card_data($query_args , $featured_card_ids);
+		}
+		
+		$fixed_cards = array_merge($featured_query_result , $top_query_result);
+
+		foreach ($fixed_cards as $fixed_card) {
+			$fixed_cards_ids[] = $fixed_card->ID ; 
+		}
+
+		$query_args['post__not_in'] = $fixed_cards_ids;
 		
 		$query_result = $posts_query->query( $query_args );
 
@@ -323,7 +337,7 @@ class WP_REST_Template_Controller extends WP_REST_Controller {
 		}
 
 		$posts = array();
-		$query_result = array_merge($featured_query_result , $query_result);
+		$query_result = array_merge($fixed_cards , $query_result);
 
 		foreach ( $query_result as $post ) {
 			if ( ! $this->check_read_permission( $post ) ) {
@@ -357,6 +371,9 @@ class WP_REST_Template_Controller extends WP_REST_Controller {
 			return new WP_Error( 'rest_post_invalid_page_number', __( 'The page number requested is larger than the number of pages available.' ), array( 'status' => 400 ) );
 		}
 
+		//echo '<pre>';
+		
+
 		$response = rest_ensure_response( $posts );
 
 		$response->header( 'X-WP-Total', (int) $total_posts );
@@ -383,6 +400,31 @@ class WP_REST_Template_Controller extends WP_REST_Controller {
 		}
 
 		return $response;
+	}
+
+
+	public function get_top_card_data($query_args , $featured_card_ids){
+
+		$query_result = array();
+		if(isset($query_args['tax_query']) && $query_args['tax_query'][0]['taxonomy'] == 'template_cat'){
+			$id = $query_args['tax_query'][0]['terms'][0] ; 
+			$top_cards = get_option('template_cat_'.$id.'_pinned_cards' , '');
+			if($top_cards != ''){
+				$top_card_ids = explode(',', $top_cards);
+				$top_card_ids_f = array();
+				foreach ($top_card_ids as $key => $id) {
+					if(!in_array($id, $featured_card_ids)){
+						$top_card_ids_f[] = $id ; 
+					}
+				}
+				$query_args['post__in'] = $top_card_ids_f ;
+				$query_args['orderby'] = 'post__in'; 
+				$posts_query  = new WP_Query();
+				$query_result = $posts_query->query( $query_args );
+				return $query_result ; 
+			}
+		}
+		return $query_result ; 
 	}
 
 	public function get_featured_cards_data($query_args){

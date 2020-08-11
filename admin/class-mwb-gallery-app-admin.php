@@ -881,33 +881,6 @@ class Mwb_Gallery_App_Admin {
  	}
 
 
-/* 	public function add_group_field_edit_form($taxonomy){
-
- 		$term_id = $taxonomy->term_id ; 
-
- 		$group_id = get_option('template_cat_'.$term_id.'_group' , '') ; 
-
- 		$group_list = get_option('template_cat_group_list' , array());
-
- 		$group = $this->get_cat_group_by_id($group_list, $group_id); 
-
- 		$group_name = isset($group['name']) ? $group['name'] : '';
-
- 		?>
-
- 		<tr class="form-field form-required term-group-name">
-			<th scope="row"><label for="name"><?php _ex( 'Group Name', 'term name' ); ?></label></th>
-			<td>
-
-				<input name="tag-group-name" id="tag-group-name" type="text" value="<?php echo $group_name ;?>" size="40" aria-required="true" list="browsers" />
-
-				<p class="description"><?php _e( 'The group of category.' ); ?></p>
-			</td>
-		</tr>
-
- 		<?php
- 	}*/
-
  	public function add_group_field_edit_form($taxonomy){
 
  		$term_id = $taxonomy->term_id ; 
@@ -915,6 +888,8 @@ class Mwb_Gallery_App_Admin {
  		$group_id = get_option('template_cat_'.$term_id.'_group' , '') ; 
 
  		$group_list = get_option('template_cat_group_list' , array());
+
+ 		$pinned_cards = get_option('template_cat_'.$term_id.'_pinned_cards' , '') ; 
 
  		?>
 
@@ -936,6 +911,15 @@ class Mwb_Gallery_App_Admin {
  				<p class="description"><?php _e( 'The group of category.' ); ?></p>
  			</td>
  		</tr>
+ 		<tr class="form-field form-required term-group-name">
+ 			<th scope="row">
+ 				<label for="top_pinned_card_ids"><?php _ex( 'Top Pinned Cards', 'term name' ); ?></label>
+ 			</th>
+ 			<td>
+ 				<input type="text" name="top_pinned_card_ids" value="<?php echo $pinned_cards ;?>">
+ 				<p class="description"><?php _e( 'Enter card numbers separated by , in order to show at page 1' ); ?></p>
+ 			</td>
+ 		</tr>
  		<?php
  	}
 
@@ -953,36 +937,21 @@ class Mwb_Gallery_App_Admin {
  		return $group;
  	}
 
-/* 	public function save_template_cat_group($term_id , $tt_id){
-
- 		if(isset($_POST['tag-group-name'])){
-
- 			$group_name = $_POST['tag-group-name'] ; 
- 			$group_list = get_option('template_cat_group_list' , array());
- 			//$group_list = array();
- 			$group = $this->get_cat_group_by_name($group_list , sanitize_text_field($group_name));
-
- 			if(empty($group)){
- 				$group = array(
- 					'id' => count($group_list) + 1,
- 					'name' => $group_name,
- 					'order' => count($group_list) + 1 
- 				);
- 			}
-
- 			update_option('template_cat_'.$term_id.'_group' , $group['id']) ; 
- 			$group_list[$group['id']] = $group ;
- 			update_option('template_cat_group_list' , $group_list );
- 		}
- 	}*/
-
  	public function save_template_cat_group($term_id , $tt_id){
+
 
  		if(isset($_POST['tag-group-name'])){
  			$group_id = $_POST['tag-group-name'] ; 
  			if($group_id != -1){
  				update_option('template_cat_'.$term_id.'_group' , $group_id) ; 
  			}
+ 		}
+
+ 		if(isset($_POST['top_pinned_card_ids'])){
+
+ 			$slug = sanitize_text_field($_POST['slug']);
+ 			update_option('template_cat_'.$term_id.'_pinned_cards' , sanitize_text_field($_POST['top_pinned_card_ids']) );
+ 			update_option('template_cat_'.$slug.'_pinned_cards' , sanitize_text_field($_POST['top_pinned_card_ids']) );
  		}
  	}
 
@@ -1112,6 +1081,12 @@ class Mwb_Gallery_App_Admin {
  			$wpdb->update( $wpdb->terms, array('term_order' => $term_order), array('term_id' => $category_id) );
  		}
 
+ 		/*$card_order_list = $_POST['card_order'];
+
+ 		foreach ($card_order_list as $card_id => $card_order) {
+ 			update_post_meta($card_id , 'card_order' , $card_order);
+ 		}*/
+
  		echo json_encode(array('status' => 'success'));
  		die;
  	}
@@ -1175,7 +1150,8 @@ class Mwb_Gallery_App_Admin {
  			$category_posts = '<ul class="mwb-template-card-list">' ; 
 
  			foreach ($query_result as $post) {
- 				$category_posts .= '<li class="mwb-template-card-listitem"><div class="mwb-template-card-name">'.$post->post_title.'</div></li>' ; 
+
+ 				$category_posts .= '<li class="mwb-template-card-listitem" card_id="'.$post->ID.'"><div class="mwb-template-card-name">'.$post->post_title.'</div></li>' ; 
  			}
 
  			$category_posts .= '</ul>';
