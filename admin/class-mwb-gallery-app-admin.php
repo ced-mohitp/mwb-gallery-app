@@ -710,12 +710,14 @@ class Mwb_Gallery_App_Admin {
 			array(
 				'taxonomy' => 'template_cat',
 				'parent' => $cat_id,
-				'hide_empty' => false,
+				'hide_empty' => true,
+				'orderby' => 'term_order',
+				'order' => 'ASC',
 			)
 		);
 		$subcats = array();
 		foreach ($term_children as $key => $child) {
-			$subcat = array('id' => $child->term_id , 'name' => $child->name , 'slug' => $child->slug);	
+			$subcat = array('id' => $child->term_id , 'name' => $child->name , 'slug' => $child->slug , 'cat_order' => $child->term_order);	
 			$temp = get_term_children($child->term_id , 'template_cat');
 
 			$subcat['subcats'] = 0 ;
@@ -833,36 +835,9 @@ class Mwb_Gallery_App_Admin {
  	}
 
 
-/* 	public function add_group_field_add_form($taxonomy){
- 		?>
-
- 		<div class="form-field form-required term-group-name">
- 			<label for="tag-name"><?php _ex( 'Group Name', 'term name' ); ?></label>
- 			<input name="tag-group-name" id="tag-group-name" type="text" value="" size="40" aria-required="true" />
- 			<p><?php _e( 'The group of category.' ); ?></p>
- 		</div>
-
- 		<?php
- 	}*/
-
 
  	public function add_group_field_add_form($taxonomy){
  		
- 		$group_list = get_option('template_cat_group_list' , array());
- 		?>
- 		<div class="form-field form-required term-group-name">
- 			<label for="tag-name"><?php _ex( 'Group Name', 'term name' ); ?></label>
- 			<select name="tag-group-name" id="tag-group-name">
- 				<?php foreach ($group_list as $key => $value) { 
- 					?>
- 					<option  value="<?php echo $value['id'] ;?>">
- 						<?php echo $value['name'] ;?>		
- 					</option>
- 				<?php } ?>
- 			</select>
- 			<p><?php _e( 'The group of category.' ); ?></p>
- 		</div>
- 		<?php
  	}
 
  	public function get_cat_group_by_id($group_list , $group_id){
@@ -883,6 +858,7 @@ class Mwb_Gallery_App_Admin {
 
  	public function add_group_field_edit_form($taxonomy){
 
+
  		$term_id = $taxonomy->term_id ; 
 
  		$group_id = get_option('template_cat_'.$term_id.'_group' , '') ; 
@@ -891,15 +867,16 @@ class Mwb_Gallery_App_Admin {
 
  		$pinned_cards = get_option('template_cat_'.$term_id.'_pinned_cards' , '') ; 
 
- 		?>
+ 		$app_heading_txt = get_option('template_cat_'.$term_id.'_heading_txt' , '') ; 
 
+ 		if($taxonomy->parent == 0 ) : ?>
  		<tr class="form-field form-required term-group-name">
  			<th scope="row">
  				<label for="name"><?php _ex( 'Group Name', 'term name' ); ?></label>
  			</th>
  			<td>
  				<select name="tag-group-name" id="tag-group-name">
- 					<option value="-1">---</option>
+ 					<option value="-1">No Group</option>
  					<?php foreach ($group_list as $key => $value) { 
  						$select = ($group_id == $value['id']) ? 'selected' : '' ;
  						?>
@@ -911,13 +888,23 @@ class Mwb_Gallery_App_Admin {
  				<p class="description"><?php _e( 'The group of category.' ); ?></p>
  			</td>
  		</tr>
- 		<tr class="form-field form-required term-group-name">
+ 		<?php endif ; ?>
+ 		<tr class="form-field  term-group-name">
  			<th scope="row">
- 				<label for="top_pinned_card_ids"><?php _ex( 'Top Pinned Cards', 'term name' ); ?></label>
+ 				<label for="top_pinned_card_ids"><?php _ex( 'Pinned Cards', 'term name' ); ?></label>
  			</th>
  			<td>
  				<input type="text" name="top_pinned_card_ids" value="<?php echo $pinned_cards ;?>">
- 				<p class="description"><?php _e( 'Enter card numbers separated by , in order to show at page 1' ); ?></p>
+ 				<p class="description"><?php _e( 'Enter Post ID numbers separated by , in order to show at page 1' ); ?></p>
+ 			</td>
+ 		</tr>
+ 		<tr class="form-field  term-group-name">
+ 			<th scope="row">
+ 				<label for="app_heading_txt"><?php _ex( 'Category Heading', 'term name' ); ?></label>
+ 			</th>
+ 			<td>
+ 				<input type="text" name="app_heading_txt" value="<?php echo $app_heading_txt ;?>">
+ 				<p class="description"><?php _e( 'Heading text for the Category' ); ?></p>
  			</td>
  		</tr>
  		<?php
@@ -939,19 +926,27 @@ class Mwb_Gallery_App_Admin {
 
  	public function save_template_cat_group($term_id , $tt_id){
 
-
  		if(isset($_POST['tag-group-name'])){
  			$group_id = $_POST['tag-group-name'] ; 
  			if($group_id != -1){
  				update_option('template_cat_'.$term_id.'_group' , $group_id) ; 
+ 			} else {
+ 				delete_option('template_cat_'.$term_id.'_group');
  			}
- 		}
 
+ 		}
  		if(isset($_POST['top_pinned_card_ids'])){
 
  			$slug = sanitize_text_field($_POST['slug']);
  			update_option('template_cat_'.$term_id.'_pinned_cards' , sanitize_text_field($_POST['top_pinned_card_ids']) );
  			update_option('template_cat_'.$slug.'_pinned_cards' , sanitize_text_field($_POST['top_pinned_card_ids']) );
+ 		}
+
+ 		if(isset($_POST['app_heading_txt'])){
+
+ 			$slug = sanitize_text_field($_POST['slug']);
+ 			update_option('template_cat_'.$term_id.'_heading_txt' , sanitize_text_field($_POST['app_heading_txt']) );
+ 			update_option('template_cat_'.$slug.'_heading_txt' , sanitize_text_field($_POST['app_heading_txt']) );
  		}
  	}
 
@@ -975,44 +970,6 @@ class Mwb_Gallery_App_Admin {
  	}
 
  	public function add_settings_panel(){
-
-
- 		$query_args = array(
- 			'post__not_in' => array(168),
- 			'post__in' => array(),
- 			'order' => 'desc',
- 			'orderby' => 'date',
- 			'paged' => 1,
- 			'post_status' => array('publish'),
- 			'date_query' => array(),
- 			'posts_per_page' => 10,
- 			'post_type' => 'template',
- 			'ignore_sticky_posts' => 1,
- 			'tax_query' => array(
- 				array(
- 					'taxonomy' => 'template_cat',
- 					'field' => 'slug',
- 					'terms' => array(
- 						'online-shop',
- 					),
- 					'include_children' => 1,
- 				)
- 			),
- 		);
-
- 		$posts_query  = new WP_Query();
- 		$query_result = $posts_query->query( $query_args );
-
-
- 		foreach ($query_result as $key => $value) {
- 			$is_featured = get_post_meta($value->ID , '_is_featured', true);
- 			//echo $value->ID.'-'.$value->post_title.'-'.$is_featured.'<br>';
- 		}
-
- 		//die;
-
-
-
 
  		include_once MWB_GALLERY_APP_PATH . 'admin/partials/mwb-gallery-app-admin-display.php';
  	}
@@ -1043,6 +1000,7 @@ class Mwb_Gallery_App_Admin {
  		$footer_setting = get_option('mwb_tgp_footer_setting' , Mwb_Gallery_App::get_settings("mwb_tgp_footer_setting"));
 
  		$all_settings = array_merge($sidebar_setting , $template_setting, $card_setting ,$card_info_setting, $prev_page_setting, $mbl_setting , $gbl_setting , $header_setting, $footer_setting) ; 
+
 
  		foreach ($all_settings as $key => $setting) {
  			if(strrpos($key, 'size') !== false){
@@ -1081,12 +1039,6 @@ class Mwb_Gallery_App_Admin {
  			$wpdb->update( $wpdb->terms, array('term_order' => $term_order), array('term_id' => $category_id) );
  		}
 
- 		/*$card_order_list = $_POST['card_order'];
-
- 		foreach ($card_order_list as $card_id => $card_order) {
- 			update_post_meta($card_id , 'card_order' , $card_order);
- 		}*/
-
  		echo json_encode(array('status' => 'success'));
  		die;
  	}
@@ -1095,9 +1047,11 @@ class Mwb_Gallery_App_Admin {
 
  		$taxonomy = is_array( $taxonomy ) ? array_shift( $taxonomy ) : $taxonomy;
 
- 		$terms = get_terms( $taxonomy, array( 'parent' => $parent , 'hide_empty'=>false) );
+ 		$terms = get_terms( $taxonomy, array( 'parent' => $parent , 'hide_empty'=>true  , 'order' => 'ASC' , 'orderby' => 'term_order') );
 
  		$category_tree = "";
+
+
 
  		$level++ ; 
 
@@ -1121,7 +1075,7 @@ class Mwb_Gallery_App_Admin {
 
  	public static function may_be_add_template_cards($taxonomy , $term_id){
 
- 		$terms = get_terms( $taxonomy, array( 'parent' => $term_id , 'hide_empty'=>false) );
+ 		$terms = get_terms( $taxonomy, array( 'parent' => $term_id , 'hide_empty'=>true) );
 
  		if(count($terms) > 0 ){
  			return "";
@@ -1150,8 +1104,7 @@ class Mwb_Gallery_App_Admin {
  			$category_posts = '<ul class="mwb-template-card-list">' ; 
 
  			foreach ($query_result as $post) {
-
- 				$category_posts .= '<li class="mwb-template-card-listitem" card_id="'.$post->ID.'"><div class="mwb-template-card-name">'.$post->post_title.'</div></li>' ; 
+ 				$category_posts .= '<li class="mwb-template-card-listitem"><div class="mwb-template-card-name">'.$post->post_title.'  ( Post id - '.$post->ID.' )</div></li>' ; 
  			}
 
  			$category_posts .= '</ul>';
@@ -1205,7 +1158,7 @@ class Mwb_Gallery_App_Admin {
  			array(
  				'taxonomy' => 'template_cat',
  				'parent' => 0,
- 				'hide_empty' => false,
+ 				'hide_empty' => true,
  			)
  		);
 
@@ -1308,5 +1261,15 @@ class Mwb_Gallery_App_Admin {
  			wp_redirect("https://wp-react-65a38.web.app/");
  			exit();
  		}
+ 	}
+
+ 	public function add_filter_terms_order( $orderby, $query_vars, $taxonomies ) {
+ 		return $query_vars['orderby'] == 'term_order' ? 'term_order' : $orderby;
+ 	}
+
+ 	public function add_rest_filter_terms_order($args , $request){
+ 		$args['orderby'] = 'term_order';
+ 		$args['hide_empty'] = true;
+ 		return $args;
  	}
 }

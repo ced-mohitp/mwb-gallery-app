@@ -19,8 +19,12 @@
 	padding: 22px 10px;
 }
 
+.mwb-tgp-admin-content .mwb-tgp-admin-form-section{
+	padding: 0;
+}
+
 .mwb-tgp-admin-form-section {
-	
+	padding: 15px;
 	margin: 20px;
 	background: #fff;
 	border: 1px #ececec;
@@ -30,18 +34,22 @@
 	box-shadow: 0 4px 12px 0 rgba(0,0,0,.15);
 }
 
-.mwb-tgp-admin-form-section-content{
-	padding: 15px;
-}
-
 .mwb-tgp-admin-form-section-head {
 	font-size: 18px;
 	font-weight: 600;
 	padding: 15px;
+	background: #1AB7A1;
 	margin-bottom: 10px;
-	background: #1ab7a1;
 	color: #fff;
-
+	border-top-left-radius : 5px;
+	border-top-right-radius : 5px;
+}
+.mwb-tgp-admin-form-row label {
+	font-size: 16px;
+	font-weight: 600;
+}
+.mwb-tgp-admin-form-section-content {
+	padding: 10px;
 }
 
 .mwb-tgp-admin-form-row{
@@ -82,9 +90,8 @@
 .mwb-cat-order-list-group-name {
 	font-size: 22px;
 	text-align: center;
-	background: #8e8e8e;
-	border: 2px solid #8e8e8e;
-	padding: 16px;
+	background: #8a03c8;
+	padding: 12px;
 	color: #fff;
 	border-radius: 3px;
 }
@@ -95,6 +102,11 @@
 	border-radius: 3px;
 	background: #1ab7a1;
 	color: #fff;
+}
+
+.mwb-list-cat-name.parent-cat {
+	border: 2px solid #0f60b7;
+	background: #0f60b7;
 }
 
 
@@ -121,11 +133,6 @@
 	border-radius: 3px;
 	background: #4f4f4f;
 	color: #fff;
-}
-
-.mwb-list-cat-name.parent {
-	background: #0a4980;;
-	border: 2px solid #0a4980;;
 }
 
 .mwb-tgp-cat-group-item {
@@ -223,6 +230,7 @@
 	margin-left: 25px;
 	margin-top: 20px;
 	padding: 5px 15px;
+	text-transform: capitalize;
 }
 
 .mwb-tgp-admin-wrap .nav-tab-wrapper .nav-tab {
@@ -235,6 +243,7 @@
 .mwb-tgp-admin-wrap .nav-tab-wrapper .selected {
 	background-color: #1AB7A1;
 	color: #ffffff;
+	border: 1px solid #1AB7A1 ; 
 }
 
 .mwb-tgp-admin-wrap .nav-tab-wrapper .nav-tab:hover,
@@ -242,6 +251,8 @@
     background: #1AB7A1 !important;
     outline: none !important;
     transition: 0.3s linear all;
+    color: #ffffff;
+    border: 1px solid #1AB7A1 ; 
 }
 
 .mwb-tgp-cat-group-save-btn-wrap .button {
@@ -275,12 +286,6 @@
 .mwb-tgp-cat-group-save-btn-wrap .button {
     margin-left: 12px;
 }
-
-.mwb-tgp-admin-form-row label {
-	font-size: 16px;
-	font-weight: 600;
-}
-
 /*=====  End of New CSS  ======*/
 /*===================================
 =            MEDIA QUERY            =

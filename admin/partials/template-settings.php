@@ -6,9 +6,12 @@ if(empty($settings)){
 ?>
 <form method="post" action="">
 	<div class="mwb-tgp-admin-form-section">
+		<div class="mwb-tgp-admin-form-section-head">
+			<?php _e('Backgroud');?>
+		</div>
 		<div class="mwb-tgp-admin-form-section-content">
 			<div class="mwb-tgp-admin-form-row">
-				<label for="template_panel_bg_color"><?php _e('Backgroud Color');?></label>
+				<label for="template_panel_bg_color"><?php _e('Color');?></label>
 				<input type="text" name="template_panel_bg_color" value="<?php echo Mwb_Gallery_App::get_setting_value($settings , "template_panel_bg_color" ) ;?>" class="mwb-color-field">
 			</div>
 		</div>		

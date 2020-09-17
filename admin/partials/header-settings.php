@@ -32,6 +32,15 @@ if(empty($settings)){
 	</div>
 	<div class="mwb-tgp-admin-form-section">
 		<div class="mwb-tgp-admin-form-section-head">
+			<?php _e('Back Button');?>
+		</div>
+		<div class="mwb-tgp-admin-form-row">
+			<label for="header_back_btn_url"><?php _e('Url');?></label>
+			<input type="text" name="header_back_btn_url" value="<?php echo Mwb_Gallery_App::get_setting_value($settings , "header_back_btn_url" ) ;?>"  placeholder="https://yoursite.com/button3">
+		</div>
+	</div>
+	<div class="mwb-tgp-admin-form-section">
+		<div class="mwb-tgp-admin-form-section-head">
 			<?php _e('Button 1');?>
 		</div>
 		<div class="mwb-tgp-admin-form-section-content">
@@ -135,5 +144,6 @@ if(empty($settings)){
 			</div>
 		</div>		
 	</div>
+	
 	<input type="submit" name="mwb_tgp_header_setting" value="save settings" class="button-primary">
 </form>	

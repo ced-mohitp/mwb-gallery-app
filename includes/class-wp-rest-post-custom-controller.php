@@ -310,7 +310,6 @@ class WP_REST_Template_Controller extends WP_REST_Controller {
 		$top_query_result = array();
 		$featured_card_ids = array();
 
-
 		$featured_query_result = $this->get_featured_cards_data($query_args);
 		
 		foreach ($featured_query_result as $featured_cards) {
@@ -371,14 +370,14 @@ class WP_REST_Template_Controller extends WP_REST_Controller {
 			return new WP_Error( 'rest_post_invalid_page_number', __( 'The page number requested is larger than the number of pages available.' ), array( 'status' => 400 ) );
 		}
 
-		//echo '<pre>';
-		
-
 		$response = rest_ensure_response( $posts );
 
 		$response->header( 'X-WP-Total', (int) $total_posts );
 		$response->header( 'X-WP-TotalPages', (int) $max_pages );
+		$response->header( 'App-Heading-Text', $this->get_heading_text($query_args) );
+		$response->header( 'Access-Control-Expose-Headers', 'X-WP-Total, X-WP-TotalPages , App-Heading-Text');
 
+		
 		$request_params = $request->get_query_params();
 		$base           = add_query_arg( urlencode_deep( $request_params ), rest_url( sprintf( '%s/%s', $this->namespace, $this->rest_base ) ) );
 
@@ -402,6 +401,23 @@ class WP_REST_Template_Controller extends WP_REST_Controller {
 		return $response;
 	}
 
+	public function get_heading_text($query_args){
+		$heading_txt = '';
+		$settings = get_option('mwb_tgp_template_setting' , array()) ;
+		if(isset($query_args['tax_query']) && $query_args['tax_query'][0]['taxonomy'] == 'template_cat'){
+			$id = $query_args['tax_query'][0]['terms'][0] ; 
+			$heading_txt = get_option('template_cat_'.$id.'_heading_txt' , '');
+			if($heading_txt == ''){
+				$heading_txt = isset($settings['cat_heading_text']) ? $settings['cat_heading_text'] : 'All Templates' ;
+			}
+		}
+
+		if($heading_txt == ''){
+			$heading_txt = isset($settings['main_heading_text']) ? $settings['main_heading_text'] : 'All Templates' ; 
+		}
+
+		return $heading_txt;
+	}
 
 	public function get_top_card_data($query_args , $featured_card_ids){
 
@@ -444,8 +460,7 @@ class WP_REST_Template_Controller extends WP_REST_Controller {
 				'value' => 'yes',
 			)
 		); 
-		$max_featured_count = 6 ; 
-
+		
 		$max_featured_count = isset($settings['featured_count']) ? $settings['featured_count'] : 6 ; 
 
 		if(isset($query_args['tax_query'])){

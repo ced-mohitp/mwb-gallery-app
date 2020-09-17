@@ -6,9 +6,12 @@ if(empty($settings)){
 ?>
 <form method="post" action="">
 	<div class="mwb-tgp-admin-form-section">
+		<div class="mwb-tgp-admin-form-section-head">
+			<?php _e('Backgroud');?>
+		</div>
 		<div class="mwb-tgp-admin-form-section-content">
 			<div class="mwb-tgp-admin-form-row">
-				<label for="sidebar_bg_color"><?php _e('Backgroud Color');?></label>
+				<label for="sidebar_bg_color"><?php _e('Color');?></label>
 				<input type="text" name="sidebar_bg_color" value="<?php echo Mwb_Gallery_App::get_setting_value($settings , "sidebar_bg_color" ) ;?>" class="mwb-color-field">
 			</div>
 		</div>		
@@ -89,6 +92,21 @@ if(empty($settings)){
 			<div class="mwb-tgp-admin-form-row">
 				<label for="sub_category_text_color"><?php _e('Text Color');?></label>
 				<input type="text" class="mwb-color-field" name="sub_category_text_color" value="<?php echo Mwb_Gallery_App::get_setting_value($settings , "sub_category_text_color" ) ;?>">
+			</div>
+		</div>		
+	</div>
+	<div class="mwb-tgp-admin-form-section">
+		<div class="mwb-tgp-admin-form-section-head">
+			<?php _e('All Label');?>
+		</div>
+		<div class="mwb-tgp-admin-form-section-content">
+			<div class="mwb-tgp-admin-form-row">
+				<label for="all_label_text_size"><?php _e('Text Size');?></label>
+				<input type="number" min="10" max="24" name="all_label_text_size" value="<?php echo Mwb_Gallery_App::get_setting_value($settings , "all_label_text_size" ) ;?>">
+			</div>
+			<div class="mwb-tgp-admin-form-row">
+				<label for="all_label_text_color"><?php _e('Text Color');?></label>
+				<input type="text" class="mwb-color-field" name="all_label_text_color" value="<?php echo Mwb_Gallery_App::get_setting_value($settings , "all_label_text_color" ) ;?>">
 			</div>
 		</div>		
 	</div>

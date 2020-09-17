@@ -211,6 +211,10 @@ class Mwb_Gallery_App {
 
 		$this->loader->add_action('template_redirect' , $plugin_admin , 'redirect_single_page_to_app');
 
+		$this->loader->add_filter( 'get_terms_orderby', $plugin_admin , 'add_filter_terms_order', 10, 3 );
+
+		$this->loader->add_filter( 'rest_template_cat_query', $plugin_admin , 'add_rest_filter_terms_order', 10, 2 );
+
 	}
 
 	/**
