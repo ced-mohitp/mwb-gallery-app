@@ -32,7 +32,7 @@ if(empty($settings)){
 	</div>
 	<div class="mwb-tgp-admin-form-section">
 		<div class="mwb-tgp-admin-form-section-head">
-			<?php _e('Back Button');?>
+			<?php _e('Close Button');?>
 		</div>
 		<div class="mwb-tgp-admin-form-row">
 			<label for="header_back_btn_url"><?php _e('Url');?></label>
